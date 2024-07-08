@@ -1,0 +1,97 @@
+<form id="connect_to_cryosparc" action="/rnode/<%= host %>/<%= port %>/login" method="post" target="_blank">
+  <input type="hidden" name="email" value="<%= user_email %>">
+  <input id="cryosparc_pw" type="hidden" name="password" value="8ab009293428a83350b8cc34733e401290a64963afd88c0d6d52ca89d5373bab">
+  <button class="btn btn-primary" type="submit">
+    <i class="fa fa-eye"></i> Connect to CryoSparc
+  </button>
+</form>
+
+<script>
+
+// cryosaprc expects passwords in login requests to be transformed w/ this method
+function transform_password(s) {
+    var e = 8, r = 0;
+    function t(u, p) {
+        var m = (65535 & u) + (65535 & p);
+        return (u >> 16) + (p >> 16) + (m >> 16) << 16 | 65535 & m
+    }
+    function a(u, p) { return u >>> p | u << 32 - p }
+    function o(u, p) { return u >>> p }
+    function n(u, p, m) { return u & p ^ ~u & m }
+    function c(u, p, m) { return u & p ^ u & m ^ p & m }
+    function i(u) { return a(u, 2) ^ a(u, 13) ^ a(u, 22) }
+    function l(u) { return a(u, 6) ^ a(u, 11) ^ a(u, 25) }
+    function _(u) { return a(u, 7) ^ a(u, 18) ^ o(u, 3) }
+    return function (u) {
+        for ( var p = r ? '0123456789ABCDEF' : '0123456789abcdef', m = '', g = 0; g < 4 * u.length; g++) {
+            m += p.charAt(u[g >> 2] >> 8 * (3 - g % 4) + 4 & 15) + p.charAt(u[g >> 2] >> 8 * (3 - g % 4) & 15);
+        }
+        return m;
+    }(
+        function (u, p) {
+            var m, g, C, B, w, k, O, X, j, Ge, ve,
+            yt = new Array(1116352408,1899447441,3049323471,3921009573,961987163,1508970993,2453635748,2870763221,3624381080,310598401,607225278,1426881987,1925078388,2162078206,2614888103,3248222580,3835390401,4022224774,264347078,604807628,770255983,1249150122,1555081692,1996064986,2554220882,2821834349,2952996808,3210313671,3336571891,3584528711,113926993,338241895,666307205,773529912,1294757372,1396182291,1695183700,1986661051,2177026350,2456956037,2730485921,2820302411,3259730800,3345764771,3516065817,3600352804,4094571909,275423344,430227734,506948616,659060556,883997877,958139571,1322822218,1537002063,1747873779,1955562222,2024104815,2227730452,2361852424,2428436474,2756734187,3204031479,3329325298),
+            $ = new Array(1779033703,3144134277,1013904242,2773480762,1359893119,2600822924,528734635,1541459225),
+            Y = new Array(64);
+            u[p >> 5] |= 128 << 24 - p % 32,
+            u[15 + (p + 64 >> 9 << 4)] = p;
+            for (var ge = 0; ge < u.length; ge += 16) {
+                m = $[0],
+                g = $[1],
+                C = $[2],
+                B = $[3],
+                w = $[4],
+                k = $[5],
+                O = $[6],
+                X = $[7];
+                for (var J = 0; J < 64; J++) Y[J] = J < 16 ? u[J + ge] : t(
+                    t(t(a(ve = Y[J - 2], 17) ^ a(ve, 19) ^ o(ve, 10), Y[J - 7]), _(Y[J - 15])),
+                    Y[J - 16]
+                ),
+                    j = t(t(t(t(X, l(w)), n(w, k, O)), yt[J]), Y[J]),
+                    Ge = t(i(m), c(m, g, C)),
+                    X = O,
+                    O = k,
+                    k = w,
+                    w = t(B, j),
+                    B = C,
+                    C = g,
+                    g = m,
+                    m = t(j, Ge);
+                $[0] = t(m, $[0]),
+                    $[1] = t(g, $[1]),
+                    $[2] = t(C, $[2]),
+                    $[3] = t(B, $[3]),
+                    $[4] = t(w, $[4]),
+                    $[5] = t(k, $[5]),
+                    $[6] = t(O, $[6]),
+                    $[7] = t(X, $[7])
+            }
+            return $
+        }(
+            function (u) {
+                for (var p = Array(), m = (1 << e) - 1, g = 0; g < u.length * e; g += e) p[g >> 5] |= (u.charCodeAt(g / e) & m) << 24 - g % 32;
+                return p
+            }(
+                s = function (u) {
+                    for (var p = '', m = 0; m < u.length; m++) {
+                        var g = u.charCodeAt(m);
+                        g < 128 ? p += String.fromCharCode(g) : g > 127 &&
+                        g < 2048 ? (
+                            p += String.fromCharCode(g >> 6 | 192),
+                                p += String.fromCharCode(63 & g | 128)
+                        ) : (
+                            p += String.fromCharCode(g >> 12 | 224),
+                                p += String.fromCharCode(g >> 6 & 63 | 128),
+                                p += String.fromCharCode(63 & g | 128)
+                        )
+                    }
+                    return p
+                }(s)
+            ),
+            s.length * e
+        )
+    )
+}
+
+</script>

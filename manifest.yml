@@ -1,0 +1,9 @@
+---
+name: CryoSPARC
+category: Interactive Apps
+subcategory: Servers
+role: batch_connect
+description: |
+  Launches the [CryoSPARC] GUI as a webapp you can use in your browser.
+
+  [CryoSPARC]: https://cryosparc.com/

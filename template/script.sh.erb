@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Set working directory to home directory
+cd "${HOME}"
+#export APPTAINER_CACHEDIR=/scratch/$USER/.apptainer
+
+#set up modules
+module purge
+module load apptainer
+#module load cryosparc
+
+#create directories if they don't exist
+dirExists=$([ -d "<%= context.work_dir %>/cryosparc" ] && echo "true" || echo "false") 
+
+mkdir -p <%= context.work_dir %>/cryosparc
+mkdir -p <%= context.work_dir %>/cryosparc/db
+mkdir -p <%= context.work_dir %>/cryosparc/run
+rm -rf <%= context.work_dir %>/cryosparc/temp
+mkdir <%= context.work_dir %>/cryosparc/temp
+if [ ! -f <%= context.work_dir %>/cryosparc/config.sh ]; then
+    touch <%= context.work_dir %>/cryosparc/config.sh
+fi
+if [ -f <%= context.work_dir %>/cryosparc/db/mongod.lock ]; then
+    cat /dev/null > <%= context.work_dir %>/cryosparc/db/mongod.lock
+fi
+if [ -f <%= context.work_dir %>/cryosparc/run/supervisord.pid ]; then
+    cat /dev/null > <%= context.work_dir %>/cryosparc/run/supervisord.pid
+fi
+echo "created cryosparc directories"
+
+cat <<EOF > <%= context.work_dir %>/cryosparc/config.sh
+export CRYOSPARC_LICENSE_ID="<%= context.cryosparc_license_id %>"
+export CRYOSPARC_MASTER_HOSTNAME='${host}'
+export CRYOSPARC_DB_PATH=<%= context.work_dir %>/cryosparc/db
+export CRYOSPARC_BASE_PORT=${port}
+export CRYOSPARC_DEVELOP=false
+export CRYOSPARC_INSECURE=false
+export CRYOSPARC_CLICK_WRAP=true
+export CRYOSPARC_FORCE_HOSTNAME=true
+<%- if context.node_type == "gpu" or context.node_type == "bii-gpu" -%>
+export CRYOSPARC_USE_GPU=true
+<%- else -%>
+export CRYOSPARC_USE_GPU=false
+<%- end -%>
+export CRYOSPARC_CUDA_PATH=/usr/local/cuda
+export CRYOSPARC_FORCE_USER=true
+export CRYOSPARC_MONGO_EXTRA_FLAGS=" "
+EOF
+echo "updated cryosparc config file"
+
+echo "running apptainer"
+apptainer exec --nv \
+    -B <%= context.work_dir %>/cryosparc/config.sh:/opt/cryosparc/cryosparc_master/config.sh \
+    -B <%= context.work_dir %>/cryosparc/config.sh:/opt/cryosparc/cryosparc_worker/config.sh \
+    -B <%= context.work_dir %>/cryosparc/run:/opt/cryosparc/cryosparc_master/run \
+    -B <%= context.work_dir %>/cryosparc/temp:/tmp \
+    /sfs/ceph/standard/rc-students/ood/cryosparc/cryosparc.sif /bin/bash <%= session.staged_root %>/in_apptainer.sh
+    #$CONTAINERDIR/cryosparc.sif

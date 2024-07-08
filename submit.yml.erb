@@ -1,0 +1,30 @@
+# Job Submission Config file
+
+---
+batch_connect:
+  template: "basic"
+  conn_params:
+    - user_email
+
+script:
+  queue_name: "<%= node_type %>"
+  native:
+    - "-J"
+    - "ood_cryosparc"
+    - "-N"
+    - "1"
+    <%- unless node_type == "dev" -%>
+    - "--cpus-per-task"
+    - "<%= num_cores %>"
+    <%- unless node_type == "standard" -%>
+    - "--mem"
+    - "<%= num_memory %>G"
+    <%- end -%>
+    <%- end -%>
+    - "--output=cryosparc_open_ondemand.log"
+    <%- if node_type == "gpu" or node_type == "bii-gpu" -%>
+    - "<%= gpu_type %><%= num_gpu%>"
+    <%- end -%>
+    <%- unless option == "" -%>
+    - "<%= option %>"
+    <%- end -%>

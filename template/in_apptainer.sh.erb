@@ -1,0 +1,30 @@
+#check the status of cryosparc
+cryosparcm status
+
+#if there are still cryosparc processes running from a previous execution
+if cryosparcm status | grep -q 'CryoSPARC process status:'; then
+    cryosparcm stop
+fi
+
+if [ -z "$(ls -A <%= context.work_dir %>/cryosparc/db)" ]; then
+    cryosparcm start
+else
+    #make sure db port is set properly
+    cryosparcm start database
+    cryosparcm fixdbport
+    cryosparcm restart
+    echo "fixed db port"
+fi
+
+#if the user doesn't exist, create one
+if cryosparcm listusers | grep -q "${USER}@virginia.edu"; then
+    cryosparcm resetpassword --email "${USER}@virginia.edu" --password "rivanna"
+else
+    cryosparcm createuser \
+    --email "${USER}@virginia.edu" \
+    --password "rivanna" \
+    --username "$USER" \
+    --firstname "$(getent passwd $USER | cut -d: -f5 | cut -f1 -d '_')" \
+    --lastname  "$(getent passwd $USER | cut -d: -f5 | cut -f2 -d '_')"
+fi
+sleep infinity

@@ -15,16 +15,13 @@ dirExists=$([ -d "<%= context.work_dir %>/cryosparc" ] && echo "true" || echo "f
 mkdir -p <%= context.work_dir %>/cryosparc
 mkdir -p <%= context.work_dir %>/cryosparc/db
 mkdir -p <%= context.work_dir %>/cryosparc/run
+rm -f <%= context.work_dir %>/cryosparc/db/mongod.lock
+rm -f <%= context.work_dir %>/cryosparc/db/WiredTiger.lock
+rm -f <%= context.work_dir %>/cryosparc/run/supervisord.pid
 rm -rf <%= context.work_dir %>/cryosparc/temp
 mkdir <%= context.work_dir %>/cryosparc/temp
 if [ ! -f <%= context.work_dir %>/cryosparc/config.sh ]; then
     touch <%= context.work_dir %>/cryosparc/config.sh
-fi
-if [ -f <%= context.work_dir %>/cryosparc/db/mongod.lock ]; then
-    cat /dev/null > <%= context.work_dir %>/cryosparc/db/mongod.lock
-fi
-if [ -f <%= context.work_dir %>/cryosparc/run/supervisord.pid ]; then
-    cat /dev/null > <%= context.work_dir %>/cryosparc/run/supervisord.pid
 fi
 echo "created cryosparc directories"
 

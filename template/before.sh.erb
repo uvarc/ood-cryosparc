@@ -10,6 +10,7 @@ password="$(create_passwd 16)"
 PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print $NF}')"
 
 export user_email="${USER}@virginia.edu"
+export session_id=<%= session.id %>
 
 echo "port: ${port}"
 echo "host: ${host}"

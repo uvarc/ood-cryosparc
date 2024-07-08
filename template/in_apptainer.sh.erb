@@ -1,5 +1,7 @@
-#check the status of cryosparc
-cryosparcm status
+#repair db from shutdown if it exists
+if [ ! -z "$( ls -A <%= context.work_dir %>/cryosparc/db )" ]; then
+    /opt/cryosparc/cryosparc_master/deps/external/mongodb/bin/mongod --dbpath <%= context.work_dir %>/cryosparc/db --repair
+fi
 
 #if there are still cryosparc processes running from a previous execution
 if cryosparcm status | grep -q 'CryoSPARC process status:'; then

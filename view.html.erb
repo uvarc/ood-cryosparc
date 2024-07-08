@@ -2,6 +2,11 @@
     <div name="waiting">
         <p>Waiting for the CryoSPARC server to start...</p>
     </div>
+    <div name="warning" style="display:none;">
+        <p class="alert alert-danger" role="alert">
+            It looks like you're missing <a href="https://github.com/wrightquist/ood_clientside_linkfix" rel="noopener" target="_blank">this browser addon</a>, which is required to use the CryoSPARC webapp.  Please install it and reload this page before attempting to connect to cryosparc.
+        </p>
+    </div>
     <div name="ready" style="display:none;">
         <p>Server is ready!</p>
         <form id="connect_to_cryosparc" action="/rnode/<%= host %>/<%= port %>/login" method="post" target="_blank">
@@ -32,9 +37,18 @@
     
     //change the card to show the that the server is ready
     function setCardConnected(cardID){
-        card = document.getElementById(cardID);
+        let card = document.getElementById(cardID);
         card.querySelector('div[name="waiting"]').style.display = "none";
         card.querySelector('div[name="ready"]').style.display = "block";
     }
+    
     checkConnectionStatus("card<%= session_id %>", "/rnode/<%= host %>/<%= port %>/login");
+    //check if user has extension installed
+    window.addEventListener("load", (event) => {
+      if (!document.getElementById("extension_installed")) {
+        let card = document.getElementById("card<%= session_id %>");
+        card.querySelector('div[name="warning"]').style.display = "block";
+        card.querySelector('div[name="ready"] button').disabled = true;
+    }
+    });
 </script>

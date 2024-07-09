@@ -3,12 +3,12 @@ cluster: "rivanna"
 
 form:
   - node_type
-  #- bc_num_slots
+  - num_nodes
   - bc_num_hours
   - num_cores
   - num_memory
   - work_dir
-  - bc_account
+  - auto_accounts
   - gpu_type
   - num_gpu
   - mode
@@ -17,43 +17,83 @@ form:
   - cryosparc_license_id
 
 attributes:
+  bc_num_hours:
+    min: 1
+    max: 168
   num_cores:
     widget: "number_field"
-    label: "Number of cores"
+    label: "Number of cores per node"
     value: 1
     min: 1
     max: 40
     step: 1
+  num_nodes:
+    widget: "number_field"
+    label: "Number of nodes"
+    value: 1
+    min: 1
+    max: 1
+    step: 1
   num_memory:
     widget: "number_field"
-    label: "Memory Request in GB ( maximum 384G )"
+    label: "Memory per node in GB"
     value: 6
-    min: 6
-    max: 384
+    min: 1
+    max: 1462
     step: 1 
-  bc_account:
-    label: "Allocation - lowercase-only"
+  auto_accounts:
+    value: null
+    label: "Allocation"
   node_type:
     widget: select
     label: "Rivanna Partition"
     options:
-      - [ "Dev", "dev", data-hide-gpu-type: true, data-hide-num-gpu: true, data-hide-bc-num-hours: true, data-hide-num-cores: true, data-hide-num-memory: true]
-      - [ "Standard", "standard", data-hide-gpu-type: true, data-hide-num-gpu: true, data-hide-num-memory: true]
-      - [ "Largemem", "largemem", data-hide-gpu-type: true, data-hide-num-gpu: true]
-      - [ "Instructional", "instructional", data-hide-gpu-type: true, data-hide-num-gpu: true]
-      - [ "GPU", "gpu"]
+      - [ "Standard", "standard", 
+            data-hide-gpu-type: true, 
+            data-hide-num-nodes: true,
+            data-hide-num-gpu: true, 
+            data-hide-num-memory: true,
+            data-max-bc-num-hours: 168,
+            data-max-num-cores: 40,
+        ]
+      - [ "Parallel", "parallel", 
+            data-hide-gpu-type: true, 
+            data-hide-num-gpu: true,
+            data-max-bc-num-hours: 72,
+            data-max-num-cores: 96,
+            data-min-num-cores: 4,
+            data-max-num-nodes: 64,
+            data-min-num-nodes: 2,
+            data-max-num-memory: 750,
+        ]
+      - [ "GPU", "gpu",
+            data-min-num-gpu: 1,
+            data-max-num-gpu: 32,
+            data-max-num-cores: 128,
+            data-max-bc-num-hours: 72,
+            data-max-num-nodes: 4,
+            data-max-num-memory: 1953,
+        ]
+      - [ "Interactive", "interactive",
+            data-hide-gpu-type: true, 
+            data-hide-num-gpu: true,
+            data-max-bc-num-hours: 12,
+            data-max-num-cores: 12,
+            data-max-num-nodes: 2,
+            data-max-num-memory: 216,
+        ]
       - [ "BII", "bii", data-hide-gpu-type: true, data-hide-num-gpu: true]
       - [ "BII-GPU", "bii-gpu"]
+      - [ "BII-LargeMem", "bii-largemem", data-hide-gpu-type: true, data-hide-num-gpu: true]
     help: |
-      - **Dev** - (*1 core*) For short sessions (1 hour) with no SU charge.
-      - **Standard** - (*1-40 cores*) Rivanna node in the standard partition.
-      - **Largemem** - (*1-40 cores*) Rivanna node in the largemem partition.
-      - **Instructional** - (*1-20 cores*) Rivanna node in the instructional partition.
-      - **GPU** - (*1-28 cores*) Rivanna node that has NVIDIA GPU.
-      - **Bii,Bii-gpu** - (*1-40 cores*) Partition for Biocomplexity Institute and Initiative.
-      - **Learn More** - [Rivanna Queuing Policies]
+      - **Standard** - (*1-40 cores*) For jobs on a single compute node
+      - **Parallel** - (*1-6000 cores*) For large parallel jobs on up to 64 nodes
+      - **GPU** - (*1-28 cores*) Rivanna node that has NVIDIA GPU
+      - **Interactive** - (*1-24 cores*) For quick interactive sessions
+      - **Bii,Bii-gpu,Bii-largemem** - (*1-40 cores*) Partition for Biocomplexity Institute and Initiative
+      - **Learn More** - [Queuing Policies]
 
-      [Rivanna Queuing Policies]: https://www.rc.virginia.edu/userinfo/rivanna/queues/
+      [Queuing Policies]: https://www.rc.virginia.edu/userinfo/rivanna/queues/
   work_dir:
     widget: select
     label: "Work Directory"

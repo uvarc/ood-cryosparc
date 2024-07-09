@@ -1,5 +1,6 @@
 #repair db from shutdown if it exists
 if [ ! -z "$( ls -A <%= context.work_dir %>/cryosparc/db )" ]; then
+    echo "repairing db" >> <%= session.staged_root %>/log.txt
     /opt/cryosparc/cryosparc_master/deps/external/mongodb/bin/mongod --dbpath <%= context.work_dir %>/cryosparc/db --repair
 fi
 
@@ -8,6 +9,8 @@ if cryosparcm status | grep -q 'CryoSPARC process status:'; then
     cryosparcm stop
 fi
 
+#start cryosparc
+echo "starting CryoSPARC" >> <%= session.staged_root %>/log.txt
 if [ -z "$(ls -A <%= context.work_dir %>/cryosparc/db)" ]; then
     cryosparcm start
 else
@@ -18,6 +21,7 @@ else
     echo "fixed db port"
 fi
 
+echo "configuring users" >> <%= session.staged_root %>/log.txt
 #if the user doesn't exist, create one
 if cryosparcm listusers | grep -q "${USER}@virginia.edu"; then
     cryosparcm resetpassword --email "${USER}@virginia.edu" --password "rivanna"
@@ -29,4 +33,5 @@ else
     --firstname "$(getent passwd $USER | cut -d: -f5 | cut -f1 -d '_')" \
     --lastname  "$(getent passwd $USER | cut -d: -f5 | cut -f2 -d '_')"
 fi
+echo "done!" >> <%= session.staged_root %>/log.txt
 sleep infinity

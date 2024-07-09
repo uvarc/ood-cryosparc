@@ -4,13 +4,12 @@
 # Find available port to run server on
 port=$(find_port)
 
-# Generate SHA1 encrypted password (requires OpenSSL installed)
+#Generate SHA1 encrypted password (requires OpenSSL installed)
+#this password is not currently used.  right now we're just using a standard login for everyone
 SALT="$(create_passwd 16)"
 password="$(create_passwd 16)"
 PASSWORD_SHA1="$(echo -n "${password}${SALT}" | openssl dgst -sha1 | awk '{print $NF}')"
 
 export user_email="${USER}@virginia.edu"
 export session_id=<%= session.id %>
-
-echo "port: ${port}"
-echo "host: ${host}"
+export session_dir=<%= session.staged_root %>

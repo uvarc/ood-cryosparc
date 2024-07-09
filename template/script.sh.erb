@@ -5,13 +5,13 @@ cd "${HOME}"
 #export APPTAINER_CACHEDIR=/scratch/$USER/.apptainer
 
 #set up modules
+echo "loading modules" >> <%= session.staged_root %>/log.txt
 module purge
 module load apptainer
-#module load cryosparc
 
 #create directories if they don't exist
-dirExists=$([ -d "<%= context.work_dir %>/cryosparc" ] && echo "true" || echo "false") 
-
+#TODO: cleanup from slurm shutting down cryosparc could be done more cleanly
+echo "creating CryoSPARC directories" >> <%= session.staged_root %>/log.txt
 mkdir -p <%= context.work_dir %>/cryosparc
 mkdir -p <%= context.work_dir %>/cryosparc/db
 mkdir -p <%= context.work_dir %>/cryosparc/run
@@ -25,6 +25,8 @@ if [ ! -f <%= context.work_dir %>/cryosparc/config.sh ]; then
 fi
 echo "created cryosparc directories"
 
+#setting configuration variables
+echo "setting CryoSPARC configuration" >> <%= session.staged_root %>/log.txt
 cat <<EOF > <%= context.work_dir %>/cryosparc/config.sh
 export CRYOSPARC_LICENSE_ID="<%= context.cryosparc_license_id %>"
 export CRYOSPARC_MASTER_HOSTNAME='${host}'
@@ -45,6 +47,8 @@ export CRYOSPARC_MONGO_EXTRA_FLAGS=" "
 EOF
 echo "updated cryosparc config file"
 
+#launch apptainer and run the script
+echo "launching apptainer" >> <%= session.staged_root %>/log.txt
 echo "running apptainer"
 apptainer exec --nv \
     -B <%= context.work_dir %>/cryosparc/config.sh:/opt/cryosparc/cryosparc_master/config.sh \

@@ -2,13 +2,27 @@
     <div name="waiting">
         <p>Waiting for the CryoSPARC server to start...</p>
     </div>
+    <div>
+        <p>status:</p>
+        <iframe id="iframe<%= session_id %>" src="/pun/sys/dashboard/files/fs<%= session_dir %>/log.txt"></iframe>
+        <script>
+            window.setInterval(function() {
+                reloadIFrame()
+            }, 3000);
+    
+            function reloadIFrame() {
+                console.log('reloading..');
+                document.getElementById('iframe<%= session_id %>').contentWindow.location.reload();
+            }
+        </script>
+    </div>
     <div name="warning" style="display:none;">
         <p class="alert alert-danger" role="alert">
             It looks like you're missing <a href="https://github.com/wrightquist/ood_clientside_linkfix" rel="noopener" target="_blank">this browser addon</a>, which is required to use the CryoSPARC webapp.  Please install it and reload this page before attempting to connect to cryosparc.
         </p>
     </div>
     <div name="ready" style="display:none;">
-        <p>Server is ready!</p>
+        <p>Server is ready!  Log in with email: <%= user_email %> and password: rivanna </p>
         <form id="connect_to_cryosparc" action="/rnode/<%= host %>/<%= port %>/login" method="post" target="_blank">
         <input type="hidden" name="email" value="<%= user_email %>">
         <input id="cryosparc_pw" type="hidden" name="password" value="8ab009293428a83350b8cc34733e401290a64963afd88c0d6d52ca89d5373bab">

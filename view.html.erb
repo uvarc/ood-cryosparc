@@ -2,19 +2,9 @@
     <div name="waiting">
         <p>Waiting for the CryoSPARC server to start...</p>
     </div>
-    <div>
+    <div name="status">
         <p>status:</p>
         <iframe id="iframe<%= session_id %>" src="/pun/sys/dashboard/files/fs<%= session_dir %>/log.txt"></iframe>
-        <script>
-            window.setInterval(function() {
-                reloadIFrame()
-            }, 3000);
-    
-            function reloadIFrame() {
-                console.log('reloading..');
-                document.getElementById('iframe<%= session_id %>').contentWindow.location.reload();
-            }
-        </script>
     </div>
     <div name="warning" style="display:none;">
         <p class="alert alert-danger" role="alert">
@@ -33,11 +23,16 @@
     </div>
 </div>
 <script>
+    function reloadIFrame() {
+        document.getElementById('iframe<%= session_id %>').contentWindow.location.reload();
+    }
+    
     function checkConnectionStatus(cardID, url){
         fetch(url).then((response) => {
             if(response.ok) setCardConnected(cardID);
             else {
                 const intervalID = setInterval(() => {
+                    reloadIFrame()
                     fetch(url).then((response) => {
                         if(response.ok){
                             setCardConnected(cardID);

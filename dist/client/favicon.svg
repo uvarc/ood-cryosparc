@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;">
+    <path d="M16,2C16,0.896 15.104,0 14,0L2,0C0.896,0 0,0.896 0,2L0,14C0,15.104 0.896,16 2,16L14,16C15.104,16 16,15.104 16,14L16,2Z" style="fill:rgb(37,99,235);"/>
+    <g>
+        <path d="M11.98,2.591L12.25,3.191" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M9.881,1.223L11.422,4.509" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M9.155,3.132L10.122,5.192" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M11.421,4.509L8.931,6.571L8.944,5.579L9.282,6.144" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M14.952,7.442L14.637,8.02" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M14.745,5.002L13.06,8.22" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M12.748,5.646L11.692,7.665" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M13.045,8.223L9.832,7.617L10.638,7.009L10.395,7.618" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M12.873,12.708L12.211,12.83" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M14.714,11.034L11.073,11.761" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M12.95,9.929L10.667,10.386" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M11.054,11.765L9.538,8.948L10.531,9.18L9.889,9.375" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M7.309,14.425L6.798,13.998" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M9.812,14.777L6.956,12.466" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M9.609,12.754L7.817,11.305" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M6.948,12.467L8.271,9.56L8.702,10.459L8.145,10.092" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M2.45,11.299L2.475,10.645" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M3.73,13.412L3.81,9.803" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M5.241,11.995L5.29,9.732" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M3.818,9.801L6.983,8.993L6.528,9.881L6.476,9.23" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M1.954,5.684L2.497,5.296" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M1.048,7.967L4.004,5.777" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M3.135,8.223L4.988,6.849" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M4.022,5.774L6.646,7.674L5.648,7.882L6.14,7.436" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+        <path d="M6.196,1.809L6.847,1.978" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M3.786,2.542L7.391,3.422" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M4.877,4.278L7.139,4.829" style="fill:none;stroke:white;stroke-width:0.9px;"/>
+        <path d="M7.406,3.419L7.513,6.596L6.723,5.967L7.389,6.063" style="fill:none;stroke:white;stroke-width:0.9px;stroke-linejoin:round;"/>
+    </g>
+</svg>

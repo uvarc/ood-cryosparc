@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      window.pathPrefix = window.location.pathname.split('/').slice(0,4).join('/');
+      var base = document.createElement('base');
+      base.href = `${window.location.origin}${window.pathPrefix}/`;
+      document.getElementsByTagName('head')[0].appendChild(base);
+      //document.head.innerHTML = `<base href="${window.location.origin}${window.pathPrefix}/"/>${document.head.innerHTML}`;
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" crossorigin="use-credentials" />
+    <meta name="theme-color" content="#2563eb" />
+    <title>CryoSPARC</title>
+    <script type="module" crossorigin src="./assets/index.146c2037.js"></script>
+    <link rel="modulepreload" href="/assets/vendor.3ae73048.js">
+    <link rel="stylesheet" href="/assets/index.c82b1418.css">
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    %cryosparc.state%
+    
+  </body>
+</html>

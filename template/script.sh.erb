@@ -55,6 +55,6 @@ apptainer exec --nv \
     -B <%= context.work_dir %>/cryosparc/config.sh:/opt/cryosparc/cryosparc_worker/config.sh \
     -B <%= context.work_dir %>/cryosparc/run:/opt/cryosparc/cryosparc_master/run \
     -B <%= context.work_dir %>/cryosparc/temp:/tmp \
-    -B /sfs/ceph/standard/rc-students/ood/cryosparc/dist/client/assets:/opt/cryosparc/cryosparc_master/cryosparc_app/custom-server/dist/client/assets \
-    -B /sfs/ceph/standard/rc-students/ood/cryosparc/dist/client/index.html:/opt/cryosparc/cryosparc_master/cryosparc_app/custom-server/dist/client/index.html \
-    /sfs/ceph/standard/rc-students/ood/cryosparc/cryosparc.sif /bin/bash <%= session.staged_root %>/in_apptainer.sh
+    -B /apps/resources/containers/apptainer/cryosparc/dist/client/assets:/opt/cryosparc/cryosparc_master/cryosparc_app/custom-server/dist/client/assets \
+    -B /apps/resources/containers/apptainer/cryosparc/dist/client/index.html:/opt/cryosparc/cryosparc_master/cryosparc_app/custom-server/dist/client/index.html \
+    /apps/resources/containers/apptainer/cryosparc-4.5.1.sif /bin/bash <%= session.staged_root %>/in_apptainer.sh

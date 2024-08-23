@@ -33,5 +33,14 @@ else
     --firstname "$(getent passwd $USER | cut -d: -f5 | cut -f1 -d '_')" \
     --lastname  "$(getent passwd $USER | cut -d: -f5 | cut -f2 -d '_')"
 fi
+
+echo "starting cryosparc worker" >> <%= session.staged_root %>/log.txt
+cryosparcw connect --worker ${host} \
+    --master ${host} \
+    --port $port \
+    --nossd \
+    --lane lane1 \
+    --newlane
+
 echo "done!" >> <%= session.staged_root %>/log.txt
 sleep infinity

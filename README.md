@@ -9,7 +9,21 @@ Requires [Lmod](https://www.tacc.utexas.edu/research-development/tacc-projects/l
 
 additionally, to use the webapp, users must install [this browser addon](https://github.com/uvarc/ood-cryosparc-linkfix)
 
-## Future Directions
+## Developing
+### files
+      dist/client - copy of all of cryosparc's clientside webapp files, but with a few changes to some of the urls in the html/js to get the webapp to work with OOD.  Not all the files here have changes to them.  This is mounted on the cryosparc apptainer to overwrite the original version of this directory.
+      template - files that are copied to the staged_root directory and rendered with erb when the app is launched
+            before.sh.erb - executed before the main script, exports the lmod "module" function, defines some variables used elsewhere (port, user email, etc)
+            in_apptainer.sh.erb - runs in the CryoSPARC apptainer, does everything directly related to managing the CryoSPARC processes
+            log.txt - used to display the startup log on the job card
+            script.sh.erb - main script, creates the CryoSPARC config files and launches the apptainer
+      form.yml - defines the job submission form the user uses to launch the app
+      icon.png - the app's icon
+      manifest.yml - metadata about the app
+      submit.yml.erb - uses info from the job submission form to construct the slurm job submission
+      view.html.erb - defines the job card that is displayed to the user when the app starts
+
+### Future Directions
 * Figure out how to shut down CyroSPARC cleanly.  Currently CryoSPARC's processes just get killed by SLURM when the SLURM job ends (when the job times out or is ended by the user).  This prevents CryoSPARC, specifically its mongoDB database, from shutting down cleanly.  The db is not able to release its resouces (mongod.lock file not emptied) so can't restart the next time the user launches the app without the database first being [repaired)(https://www.mongodb.com/docs/manual/tutorial/recover-data-following-unexpected-shutdown/).  This is currently being handled at the top of the `/template/in_apptainer.erb.sh` file.  The --repair command is risky and may result in some data loss, as well as time consuming.  One option would be to use a timer in the script along with the bc_num_hours parameter from the job submission to start shutting CryoSPARC down just before (maybe a minute or so, depends on how long the shutdown process usually takes) before the job times out.  This would not fix the case where the user uses the "delete" button on the job card or ends the job early through the terminal.  Someone who knows more about SLURM might know of a better way.
 * Do some more rigourous testing to check that the job submission form works and all job parameters are set correctly
 * Fix webapp urls serverside instead of in a browser addon.
